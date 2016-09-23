@@ -24,24 +24,30 @@ The following data provider classes are included in the Yii releases:
 * [[yii\data\SqlDataProvider]]：执行 SQL 语句和返回以数组形式的数据库数据。
 * [[yii\data\ArrayDataProvider]]: takes a big array and returns a slice of it based on the paginating and sorting
   specifications.
-* [[yii\data\ArrayDataProvider]]：制作一个大数组和返回一部分基于分页和排序
+* [[yii\data\ArrayDataProvider]]：获得一个大数组和返回一部分基于分页和排序的详细说明
 
 The usage of all these data providers share the following common pattern:
 
+所有这些数据提供者的使用方式分为以下常见模式：
+
 ```php
 // create the data provider by configuring its pagination and sort properties
+// 通过配置它的分页和排序属性来创建数据提供者
 $provider = new XyzDataProvider([
     'pagination' => [...],
     'sort' => [...],
 ]);
 
 // retrieves paginated and sorted data
+// 检索分页和排序数据
 $models = $provider->getModels();
 
 // get the number of data items in the current page
+// 得到当前页面数据项的数目
 $count = $provider->getCount();
 
 // get the total number of data items across all pages
+// 得到所有页面数据项的总数目
 $totalCount = $provider->getTotalCount();
 ```
 
@@ -50,8 +56,12 @@ You specify the pagination and sorting behaviors of a data provider by configuri
 which correspond to the configurations for [[yii\data\Pagination]] and [[yii\data\Sort]], respectively.
 You may also configure them to be `false` to disable pagination and/or sorting features.
 
+你可以配置 [[yii\data\BaseDataProvider::pagination|pagination]] 和 [[yii\data\BaseDataProvider::sort|sort]] 属性来规定数据提供者的分页和排序行为，同时它们也分别对应到 [[yii\data\Pagination]] 和 [[yii\data\Sort]] 的配置。你还可以把它们配置为 `false` 来同时（或单独）关闭分页和排序功能。 
+
 [Data widgets](output-data-widgets.md), such as [[yii\grid\GridView]], have a property named `dataProvider` which
 can take a data provider instance and display the data it provides. For example,
+
+数据小部件 [Data widgets](output-data-widgets.md)，比如 [[yii\grid\GridView]]，有一个称为 `dataProvider` 的属性，它可以获取数据提供者实例以及显示它提供的数据。比如，
 
 ```php
 echo yii\grid\GridView::widget([
@@ -62,13 +72,17 @@ echo yii\grid\GridView::widget([
 These data providers mainly vary in the way how the data source is specified. In the following subsections,
 we will explain the detailed usage of each of these data providers.
 
+这些数据提供者主要以源数据的定义方式而变化。在以下子章节中，我们会说明每个数据提供者的详细使用方法。
 
 ## Active Data Provider <span id="active-data-provider"></span> 
+## 活动数据提供者 <span id="active-data-provider"></span> 
 
 To use [[yii\data\ActiveDataProvider]], you should configure its [[yii\data\ActiveDataProvider::query|query]] property.
 It can take either a [[yii\db\Query]] or [[yii\db\ActiveQuery]] object. If the former, the data returned will be arrays;
 if the latter, the data returned can be either arrays or [Active Record](db-active-record.md) instances.
 For example,
+
+使用 [[yii\data\ActiveDataProvider]]，你应该配置它的 [[yii\data\ActiveDataProvider::query|query]] 属性。他可以得到一个 [[yii\db\Query]] 或 [[yii\db\ActiveQuery]] 对象。如果是前者，数据将会以数组的方式返回；如果是后者，数据可以以数组或活动记录实例 [Active Record](db-active-record.md) 的方式返回。比如，
 
 ```php
 use yii\data\ActiveDataProvider;
@@ -89,10 +103,13 @@ $provider = new ActiveDataProvider([
 ]);
 
 // returns an array of Post objects
+// 返回 Post 对象的数组
 $posts = $provider->getModels();
 ```
 
 If `$query` in the above example is created using the following code, then the data provider will return raw arrays.
+
+如果以上例子的 `$query` 变量是通过使用一下代码创建的话，那么这个数据提供者会返回原始数组。 
 
 ```php
 use yii\db\Query;
@@ -103,6 +120,8 @@ $query = (new Query())->from('post')->where(['status' => 1]);
 > Note: If a query already specifies the `orderBy` clause, the new ordering instructions given by end users
   (through the `sort` configuration) will be appended to the existing `orderBy` clause. Any existing `limit`
   and `offset` clauses will be overwritten by the pagination request from end users (through the `pagination` configuration). 
+
+> 注意：如果查询已经定义了 `orderBy` 子句，那么由终端用户（通过 `sort` 设置）给定的新排序参数会附加到现有的 `orderBy` 子句后面。任何现有 `limit` 和 `offset` 子句会被来自终端用户（通过 `pagination` 设置）的分页请求重写。
 
 By default, [[yii\data\ActiveDataProvider]] uses the `db` application component as the database connection. You may
 use a different database connection by configuring the [[yii\data\ActiveDataProvider::db]] property.
