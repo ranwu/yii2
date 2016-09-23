@@ -109,7 +109,7 @@ $posts = $provider->getModels();
 
 If `$query` in the above example is created using the following code, then the data provider will return raw arrays.
 
-如果以上例子的 `$query` 变量是通过使用以下代码创建的话，那么这个数据提供者会返回原始数组。 
+如果以上例子的 `$query` 变量是通过使用以下代码创建的话，那么这个数据提供者会原始数组的方式返回。 
 
 ```php
 use yii\db\Query;
