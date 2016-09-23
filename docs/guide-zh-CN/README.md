@@ -47,7 +47,7 @@ Yii 2.0 权威指南
 * **已定稿** [运行概述](runtime-overview.md)
 * **已定稿** [引导（Bootstrapping）](runtime-bootstrapping.md)
 * **已定稿** [路由（Route）引导与创建 URL](runtime-routing.md)
-* **已定稿** [请求（Request）](runtime-requests.md)
+* **待定中** [请求（Request）](runtime-requests.md)
 * **已定稿** [响应（Response）](runtime-responses.md)
 * **已定稿** [Sessions（会话）和 Cookies](runtime-sessions-cookies.md)
 * **已定稿** [错误处理](runtime-handling-errors.md)
