@@ -175,10 +175,11 @@ $models = $provider->getModels();
   will be modified by the provider to return only the currently requested page of data. The provider still
   needs to know the total number of data items in order to correctly calculate the number of pages available.
 
-> 消息：[[yii\data\SqlDataProvider::totalCount|totalCount]] 属性仅当你需要分页数据的时候才被请求。这是因为通过 [[yii\data\SqlDataProvider::sql|sql]] 定义的 SQL 语句会被返回当前请求数据页面的数据提供者修改。数据提供者仍需知道数据项的总数来正确计算有效页面的数量。
+> 注释：[[yii\data\SqlDataProvider::totalCount|totalCount]] 属性仅当在你需要分页请求数据的时候才会被请求。这是因为通过 [[yii\data\SqlDataProvider::sql|sql]] 定义的 SQL 语句会被可以返回当前请求页面数据的数据提供者修改。数据提供者仍需知道数据项的总数以便正确计算有效页面的数量。
 
 
 ## Array Data Provider <span id="array-data-provider"></span>
+## 数组数据提供者 <span id="array-data-provider"></span>
 
 [[yii\data\ArrayDataProvider]] is best used when working with a big array. The provider allows you to return
 a page of the array data sorted by one or multiple columns. To use [[yii\data\ArrayDataProvider]], you should
@@ -187,6 +188,9 @@ Elements in the big array can be either associative arrays
 (e.g. query results of [DAO](db-dao.md)) or objects (e.g. [Active Record](db-active-record.md) instances).
 For example,
 
+[[yii\data\ArrayDataProvider]] 是运行大数组（big array）的最佳使用方式。这个数据提供者允许你返回以一个或多个字段排序的数组页。使用 [[yii\data\ArrayDataProvider]]，你应该定义 [[yii\data\ArrayDataProvider::allModels|allModels]] 属性来作为大数组（big array）。
+大数组元素要么是关联数组（例子：[DAO](db-dao.md) 查询结果）要么是对象（例子：[Active Record](db-active-record.md) 对象）。
+比如，
 ```php
 use yii\data\ArrayDataProvider;
 
@@ -208,20 +212,26 @@ $provider = new ArrayDataProvider([
 ]);
 
 // get the rows in the currently requested page
+// 得到当前请求页的数据
 $rows = $provider->getModels();
 ``` 
 
 > Note: Compared to [Active Data Provider](#active-data-provider) and [SQL Data Provider](#sql-data-provider),
   array data provider is less efficient because it requires loading *all* data into the memory.
 
+> 注意：用数组数据提供者（array data provider）来比较 [Active Data Provider](#active-data-provider) 和 [SQL Data Provider](#sql-data-provider) 是低效的，因为它需要将*所有*数据加载到内存。
 
 ## Working with Data Keys <span id="working-with-keys"></span>
+## 使用 Data Keys <span id="working-with-keys"></span>
+
 
 When using the data items returned by a data provider, you often need to identify each data item with a unique key.
 For example, if the data items represent customer information, you may want to use the customer ID as the key
 for each customer data. Data providers can return a list of such keys corresponding with the data items returned 
 by [[yii\data\DataProviderInterface::getModels()]]. For example,
 
+使用由数据提供者返回的数据项时，你需要频繁地定义那些带着唯一键的数据项。
+比如，如果数据项表示用户信息，你也许想使用用户 ID 来作为每个用户数据的 key。数据提供者可以返回一个这样的 key 所对应的，由 [[yii\data\DataProviderInterface::getModels()]] 所返回的数据项的列表。比如，
 ```php
 use yii\data\ActiveDataProvider;
 
@@ -232,9 +242,11 @@ $provider = new ActiveDataProvider([
 ]);
 
 // returns an array of Post objects
+// 返回一个 Post 对象数组
 $posts = $provider->getModels();
 
 // returns the primary key values corresponding to $posts
+// 返回与 $posts 相应的主键值
 $ids = $provider->getKeys();
 ```
 
