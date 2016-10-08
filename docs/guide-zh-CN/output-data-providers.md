@@ -126,6 +126,8 @@ $query = (new Query())->from('post')->where(['status' => 1]);
 By default, [[yii\data\ActiveDataProvider]] uses the `db` application component as the database connection. You may
 use a different database connection by configuring the [[yii\data\ActiveDataProvider::db]] property.
 
+默认情况下，[[yii\data\ActiveDataProvider]] 使用 `db` 应用程序组件来作为数据库连接器。你可以配置 [[yii\data\ActiveDataProvider]] 属性来使用不同的数据库连接器
+
 
 ## SQL Data Provider <span id="sql-data-provider"></span>
 
@@ -134,8 +136,12 @@ data. Based on the specifications of [[yii\data\SqlDataProvider::sort|sort]] and
 [[yii\data\SqlDataProvider::pagination|pagination]], the provider will adjust the `ORDER BY` and `LIMIT`
 clauses of the SQL statement accordingly to fetch only the requested page of data in the desired order.
 
+[[yii\data\SqlDataProvider]] 和被用来获取需要的数据的原始 SQL 语句一起工作。在基于 [[yii\data\SqlDataProvider::sort|sort]] 和 [[yii\data\SqlDataProvider::pagination|pagination]] 的说明下，数据提供者会调整 SQL 语句的 `ORDER BY` 和 `LIMIT` 子句，然后根据这个语句仅获取按要求排序数据的被请求页面。
+
 To use [[yii\data\SqlDataProvider]], you should specify the [[yii\data\SqlDataProvider::sql|sql]] property as well
 as the [[yii\data\SqlDataProvider::totalCount|totalCount]] property. For example,
+
+使用 [[yii\data\SqlDataProvider]]，你可以定义 [[yii\data\SqlDataProvider::sql|sql]] 属性以及 [[yii\data\SqlDataProvider::totalCount|totalCount]] 属性。比如说，
 
 ```php
 use yii\data\SqlDataProvider;
@@ -168,6 +174,8 @@ $models = $provider->getModels();
   paginate the data. This is because the SQL statement specified via [[yii\data\SqlDataProvider::sql|sql]]
   will be modified by the provider to return only the currently requested page of data. The provider still
   needs to know the total number of data items in order to correctly calculate the number of pages available.
+
+> 消息：[[yii\data\SqlDataProvider::totalCount|totalCount]] 属性仅当你需要分页数据的时候才被请求。这是因为通过 [[yii\data\SqlDataProvider::sql|sql]] 定义的 SQL 语句会被返回当前请求数据页面的数据提供者修改。数据提供者仍需知道数据项的总数来正确计算有效页面的数量。
 
 
 ## Array Data Provider <span id="array-data-provider"></span>
