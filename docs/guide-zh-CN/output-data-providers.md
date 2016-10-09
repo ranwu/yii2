@@ -1,52 +1,31 @@
 数据提供者
 ==============
 
-In the [Pagination](output-pagination.md) and [Sorting](output-sorting.md) sections, we have described how to
-allow end users to choose a particular page of data to display and sort them by some columns. Because the task
-of paginating and sorting data is very common, Yii provides a set of *data provider* classes to encapsulate it.
-
 在[分页](output-pagination.md)和[排序](output-sorting.md)章节里，我们讲解了如何让终端用户去选择某数据的特殊页面以及通过一些字段来让它们排序。由于数据分页和排序是非常普遍的任务，所以 Yii 提供了一套*数据提供者（data provider）*  类来封装它。
-
-A data provider is a class implementing [[yii\data\DataProviderInterface]]. It mainly supports retrieving paginated
-and sorted data. It is usually used to work with [data widgets](output-data-widgets.md) so that end users can 
-interactively paginate and sort data.
 
 数据提供者（data provider）是一个实现 [[yii\data\DataProviderInterface]] 接口的类，主要支持分页检索和数据排序，常常与 [data widgets](output-data-widgets.md) 一起运行以达到终端用户可以交互式地进行分页和排序数据的目的。
 
-The following data provider classes are included in the Yii releases:
-
 以下是包含在 Yii 发行中的数据提供者（data provider）类：
 
-* [[yii\data\ActiveDataProvider]]: uses [[yii\db\Query]] or [[yii\db\ActiveQuery]] to query data from databases
-  and return them in terms of arrays or [Active Record](db-active-record.md) instances.
 * [[yii\data\ActiveDataProvider]]：使用 [[yii\db\Query]] 或 [[yii\db\ActiveQuery]] 来查询数据库并且以数组或 [Active Record](db-active-record.md) 实例来返回。
-* [[yii\data\SqlDataProvider]]: executes a SQL statement and returns database data as arrays.
 * [[yii\data\SqlDataProvider]]：执行 SQL 语句和返回以数组形式的数据库数据。
-* [[yii\data\ArrayDataProvider]]: takes a big array and returns a slice of it based on the paginating and sorting
-  specifications.
 * [[yii\data\ArrayDataProvider]]：获得一个大数组和返回一部分基于分页和排序的详细说明
-
-The usage of all these data providers share the following common pattern:
 
 所有这些数据提供者的使用方式分为以下常见模式：
 
 ```php
-// create the data provider by configuring its pagination and sort properties
 // 通过配置它的分页和排序属性来创建数据提供者
 $provider = new XyzDataProvider([
     'pagination' => [...],
     'sort' => [...],
 ]);
 
-// retrieves paginated and sorted data
 // 检索分页和排序数据
 $models = $provider->getModels();
 
-// get the number of data items in the current page
 // 得到当前页面数据项的数目
 $count = $provider->getCount();
 
-// get the total number of data items across all pages
 // 得到所有页面数据项的总数目
 $totalCount = $provider->getTotalCount();
 ```
