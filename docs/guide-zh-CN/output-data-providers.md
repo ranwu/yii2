@@ -30,15 +30,7 @@ $count = $provider->getCount();
 $totalCount = $provider->getTotalCount();
 ```
 
-You specify the pagination and sorting behaviors of a data provider by configuring its 
-[[yii\data\BaseDataProvider::pagination|pagination]] and [[yii\data\BaseDataProvider::sort|sort]] properties
-which correspond to the configurations for [[yii\data\Pagination]] and [[yii\data\Sort]], respectively.
-You may also configure them to be `false` to disable pagination and/or sorting features.
-
 你可以配置 [[yii\data\BaseDataProvider::pagination|pagination]] 和 [[yii\data\BaseDataProvider::sort|sort]] 属性来规定数据提供者的分页和排序行为，同时它们也分别对应到 [[yii\data\Pagination]] 和 [[yii\data\Sort]] 的配置。你还可以把它们配置为 `false` 来同时（或单独）关闭分页和排序功能。 
-
-[Data widgets](output-data-widgets.md), such as [[yii\grid\GridView]], have a property named `dataProvider` which
-can take a data provider instance and display the data it provides. For example,
 
 数据小部件 [Data widgets](output-data-widgets.md)，比如 [[yii\grid\GridView]]，有一个称为 `dataProvider` 的属性，它可以获取数据提供者实例以及显示它提供的数据。比如，
 
@@ -48,18 +40,10 @@ echo yii\grid\GridView::widget([
 ]);
 ```
 
-These data providers mainly vary in the way how the data source is specified. In the following subsections,
-we will explain the detailed usage of each of these data providers.
-
 这些数据提供者主要以源数据的定义方式而变化。在以下子章节中，我们会说明每个数据提供者的详细使用方法。
 
-## Active Data Provider <span id="active-data-provider"></span> 
-## 活动数据提供者 <span id="active-data-provider"></span> 
 
-To use [[yii\data\ActiveDataProvider]], you should configure its [[yii\data\ActiveDataProvider::query|query]] property.
-It can take either a [[yii\db\Query]] or [[yii\db\ActiveQuery]] object. If the former, the data returned will be arrays;
-if the latter, the data returned can be either arrays or [Active Record](db-active-record.md) instances.
-For example,
+## 活动数据提供者 <span id="active-data-provider"></span> 
 
 使用 [[yii\data\ActiveDataProvider]]，你应该配置它的 [[yii\data\ActiveDataProvider::query|query]] 属性。他可以得到一个 [[yii\db\Query]] 或 [[yii\db\ActiveQuery]] 对象。如果是前者，数据将会以数组的方式返回；如果是后者，数据可以以数组或活动记录实例 [Active Record](db-active-record.md) 的方式返回。比如，
 
@@ -81,12 +65,9 @@ $provider = new ActiveDataProvider([
     ],
 ]);
 
-// returns an array of Post objects
 // 返回 Post 对象的数组
 $posts = $provider->getModels();
 ```
-
-If `$query` in the above example is created using the following code, then the data provider will return raw arrays.
 
 如果以上例子的 `$query` 变量是通过使用以下代码创建的话，那么这个数据提供者会以原始数组的方式返回。 
 
@@ -96,29 +77,14 @@ use yii\db\Query;
 $query = (new Query())->from('post')->where(['status' => 1]); 
 ```
 
-> Note: If a query already specifies the `orderBy` clause, the new ordering instructions given by end users
-  (through the `sort` configuration) will be appended to the existing `orderBy` clause. Any existing `limit`
-  and `offset` clauses will be overwritten by the pagination request from end users (through the `pagination` configuration). 
-
 > 注意：如果查询已经定义了 `orderBy` 子句，那么由终端用户（通过 `sort` 设置）给定的新排序参数会附加到现有的 `orderBy` 子句后面。任何现有 `limit` 和 `offset` 子句会被来自终端用户（通过 `pagination` 设置）的分页请求重写。
-
-By default, [[yii\data\ActiveDataProvider]] uses the `db` application component as the database connection. You may
-use a different database connection by configuring the [[yii\data\ActiveDataProvider::db]] property.
 
 默认情况下，[[yii\data\ActiveDataProvider]] 使用 `db` 应用程序组件来作为数据库连接器。你可以配置 [[yii\data\ActiveDataProvider]] 属性来使用不同的数据库连接器
 
 
-## SQL Data Provider <span id="sql-data-provider"></span>
+## SQL 数据提供者 <span id="sql-data-provider"></span>
 
-[[yii\data\SqlDataProvider]] works with a raw SQL statement which is used to fetch the needed
-data. Based on the specifications of [[yii\data\SqlDataProvider::sort|sort]] and 
-[[yii\data\SqlDataProvider::pagination|pagination]], the provider will adjust the `ORDER BY` and `LIMIT`
-clauses of the SQL statement accordingly to fetch only the requested page of data in the desired order.
-
-[[yii\data\SqlDataProvider]] 和被用来获取需要的数据的原始 SQL 语句一起工作。在基于 [[yii\data\SqlDataProvider::sort|sort]] 和 [[yii\data\SqlDataProvider::pagination|pagination]] 的说明下，数据提供者会调整 SQL 语句的 `ORDER BY` 和 `LIMIT` 子句，然后根据这个语句仅获取按要求排序数据的被请求页面。
-
-To use [[yii\data\SqlDataProvider]], you should specify the [[yii\data\SqlDataProvider::sql|sql]] property as well
-as the [[yii\data\SqlDataProvider::totalCount|totalCount]] property. For example,
+[[yii\data\SqlDataProvider]] 和被用来获取需要数据的原始 SQL 语句一起工作。在基于 [[yii\data\SqlDataProvider::sort|sort]] 和 [[yii\data\SqlDataProvider::pagination|pagination]] 的说明下，数据提供者会调整 SQL 语句的 `ORDER BY` 和 `LIMIT` 子句，然后根据这个语句仅获取按要求排序数据的被请求页面。
 
 使用 [[yii\data\SqlDataProvider]]，你可以定义 [[yii\data\SqlDataProvider::sql|sql]] 属性以及 [[yii\data\SqlDataProvider::totalCount|totalCount]] 属性。比如说，
 
