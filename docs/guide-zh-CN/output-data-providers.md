@@ -255,14 +255,18 @@ it is intelligent enough to return primary key values as the keys. You may also 
 values should be calculated by configuring [[yii\data\ActiveDataProvider::key]] with a column name or
 a callable calculating key values. For example,
 
+在以上例子中，你给 [[yii\data\ActiveDataProvider]] 提供了一个 [[yii\db\ActiveQuery]] 对象，它作为一个 key 来返回主键值是足够智能的。你也可以明确地定义键值应该怎样被计算（通过配置 [[yii\data\ActiveDataProvider::key]]，以列名或可调用对象来计算键值）。比如，
+
 ```php
 // use "slug" column as key values
+// 使用 “slug” 列名作为键值
 $provider = new ActiveDataProvider([
     'query' => Post::find(),
     'key' => 'slug',
 ]);
 
 // use the result of md5(id) as key values
+// 使用 md5(id) 的结果作为键值
 $provider = new ActiveDataProvider([
     'query' => Post::find(),
     'key' => function ($model) {
@@ -273,19 +277,26 @@ $provider = new ActiveDataProvider([
 
 
 ## Creating Custom Data Provider <span id="custom-data-provider"></span>
+## 建立自定义数据提供者 <span id="custom-data-provider"></span>
 
 To create your own custom data provider classes, you should implement [[yii\data\DataProviderInterface]].
 An easier way is to extend from [[yii\data\BaseDataProvider]] which allows you to focus on the core data provider
 logic. In particular, you mainly need to implement the following methods:
+建立你自己独有的数据提供者类，你应该实现 [[yii\data\DataProviderInterface]] 接口。一个容易的方法是扩展 [[yii\data\BaseDataProvider]]，它允许你聚焦在核心数据提供者逻辑上。实际上，你只需要实现以下方法就可以了：
                                                    
 - [[yii\data\BaseDataProvider::prepareModels()|prepareModels()]]: prepares the data models that will be made 
   available in the current page and returns them as an array.
+- [[yii\data\BaseDataProvider::prepareModels()|prepareModels()]]：预先准备数据模型，它会在当前页面被有效创建，并且以数组的方式返回它们。
 - [[yii\data\BaseDataProvider::prepareKeys()|prepareKeys()]]: accepts an array of currently available data models
   and returns keys associated with them.
+- [[yii\data\BaseDataProvider::prepareKeys()|prepareKeys()]]：接收一个当前有效数据模型的数组并且返回和它们相关联的键。
+  
 - [[yii\data\BaseDataProvider::prepareTotalCount()|prepareTotalCount]]: returns a value indicating the total number 
   of data models in the data provider.
+- [[yii\data\BaseDataProvider::prepareTotalCount()|prepareTotalCount]]：返回一个数值，它表示在数据提供者中数据模型的总数。
 
 Below is an example of a data provider that reads CSV data efficiently:
+以下是一个数据提供者的例子，它有效地读取　CSV 数据：
 
 ```php
 <?php
@@ -296,10 +307,16 @@ class CsvDataProvider extends BaseDataProvider
     /**
      * @var string name of the CSV file to read
      */
+      /**
+     * @var string 读取 CSV 文件的名称
+     */
     public $filename;
     
     /**
      * @var string|callable name of the key column or a callable returning it
+     */
+     /**
+     * @var string|callable 键列或可以返回值的可调用对象的名称
      */
     public $key;
     
@@ -307,7 +324,7 @@ class CsvDataProvider extends BaseDataProvider
      * @var SplFileObject
      */
     protected $fileObject; // SplFileObject is very convenient for seeking to particular line in a file
-    
+    // SplFileObject 对象在寻找一个文件中的特殊行非常方便
  
     /**
      * @inheritdoc
