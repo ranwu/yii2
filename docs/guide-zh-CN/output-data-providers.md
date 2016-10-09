@@ -5,7 +5,7 @@ In the [Pagination](output-pagination.md) and [Sorting](output-sorting.md) secti
 allow end users to choose a particular page of data to display and sort them by some columns. Because the task
 of paginating and sorting data is very common, Yii provides a set of *data provider* classes to encapsulate it.
 
-在[分页](output-pagination.md)和[排序](output-sorting.md)章节里，我们讲解了如何让终端用户去选择某数据的特殊页面以及通过一些字段来让它们排序。由于数据分页和排序是非常普遍的任务，所以 Yii 提供了一套 *data provider* 类来封装它。
+在[分页](output-pagination.md)和[排序](output-sorting.md)章节里，我们讲解了如何让终端用户去选择某数据的特殊页面以及通过一些字段来让它们排序。由于数据分页和排序是非常普遍的任务，所以 Yii 提供了一套*数据提供者（data provider）*  类来封装它。
 
 A data provider is a class implementing [[yii\data\DataProviderInterface]]. It mainly supports retrieving paginated
 and sorted data. It is usually used to work with [data widgets](output-data-widgets.md) so that end users can 
@@ -334,6 +334,7 @@ class CsvDataProvider extends BaseDataProvider
         parent::init();
         
         // open file
+        // 打开文件
         $this->fileObject = new SplFileObject($this->filename);
     }
  
@@ -347,12 +348,14 @@ class CsvDataProvider extends BaseDataProvider
  
         if ($pagination === false) {
             // in case there's no pagination, read all lines
+            // 这个例子没有分页，读取所有行
             while (!$this->fileObject->eof()) {
                 $models[] = $this->fileObject->fgetcsv();
                 $this->fileObject->next();
             }
         } else {
             // in case there's pagination, read only a single page
+            // 这个例子有分页，只读取单行
             $pagination->totalCount = $this->getTotalCount();
             $this->fileObject->seek($pagination->getOffset());
             $limit = $pagination->getLimit();
